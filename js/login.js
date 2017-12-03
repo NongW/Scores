@@ -26,16 +26,16 @@
 				    //show_msg('登录成功咯！  正在为您跳转...', 'http://localhost:8000/scores/?id="+$('#password').val()+"&pass=nwboss007&year=2015&semester=1');
                     
 				    $.ajax({
-				        url: "http://10.253.113.19:8000/scores/?id=" + $('#email').val() + "&pass=" + $('#password').val() +
+				        url: "http://localhost:8000/scores/?id=" + $('#email').val() + "&pass=" + $('#password').val() +
                             "&year="+$('#year').find("option:selected").val()+"&semester="+$('#system').find("option:selected").val(),
 				        headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "access-control-allow-origin, access-control-allow-headers" },
 				        processData: false,
 				        dataType: "json",
 				        success: function (data) {
 				            $("#tb").empty();
-				            if (data.message == "success") {
-				                $.each(data.result.scores, function (index, data) {
-				                    $("#tb").append("<tr><th>" + data.lession + "</th><th>" + data.score + "</th></tr>");
+				            if (data.message == "success.") {
+				                $.each(data.scores, function (index, data) {
+				                    $("#tb").append("<tr><th>" + data.lesson + "</th><th>" + data.score + "</th></tr>");
 				                })
 				            }
 				            else if (data.status == "400")
@@ -43,7 +43,7 @@
 				            else if (data.status == "404")
 				                $("#tb").append("<p>地址错误</p>");
 				            else
-				                $("#tb").append("<p>系统错误</p>");
+				                $("#tb").append("<p>"+data.message+"</p>");
 				        },
 				        error: function (XMLHttpRequest, textStatus, errorThrown) {
 				            alert(XMLHttpRequest.status);
